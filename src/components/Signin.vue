@@ -46,7 +46,22 @@ export default {
       .then(response => this.signinSuccessful(response))
       .catch(error => this.signinFailed(error))
     },
-    
+    signinSuccessful (response) {
+      if (!response.data.csrf) {
+        this.signinFailed(response)
+        return
+      }
+      localStorage.csrf = response.data.csrf
+      localStorage.signedIn = true
+      this.error = ''
+      this.$router.replace('/')
+    },
+    signinFailed (error) {
+      this.error = (error.response && error.response.data && error.response.data.error)
+      delete localStorage.csrf
+      delete localStorage.signedIn
+    },
+
   }
 }
 </script>
