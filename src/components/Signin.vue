@@ -61,7 +61,11 @@ export default {
       delete localStorage.csrf
       delete localStorage.signedIn
     },
-
+    checkSignedIn () {
+      if (localStorage.signedIn) {
+        this.$router.replace('/records')
+      }
+    }
   }
 }
 </script>
