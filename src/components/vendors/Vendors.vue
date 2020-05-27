@@ -65,7 +65,21 @@ export default {
     }
   },
   methods: {
-    
+    setError (error, text) {
+      this.error = (error.response && error.response.data && error.response.data.error) || text
+    },
+    addVendor () {
+      const val = this.newVendor
+      if (!val) {
+        return
+      }
+      this.$http.secured.post('api/v1/vendors', { vendor: { name: this.newVendor.name }})
+        .then(response => {
+          this.vendors.push(response.data)
+          this.newVendor = ''
+        })
+        .catch(error => this.setError(error, 'Cannot create artist'))
+    },
   }
 }
 </script>
