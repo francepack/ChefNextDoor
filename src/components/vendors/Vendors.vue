@@ -33,9 +33,9 @@
 
         <div v-if="artist == editedArtist">
           <form @submit.prevent="updatedVendor(vendor)">
-            <div>
-              <input />
-              <input />
+            <div class="mb-6 px-4 bg-white rounded border border-gray-400 mt-4">
+              <input class="input" v-model="vendor.name" />
+              <input type="submit" value="Update" class="my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue-400 border border-blue-400 no-underline font-bold py-2 px-4 rounded cursor-pointer" />
             </div>
           </form>
         </div>
@@ -43,3 +43,20 @@
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Artists',
+  data () {
+    return {
+      vendors: [],
+      newVendor: [],
+      error: '',
+      editArtist: ''
+    }
+  }, 
+  created () {
+
+  }
+}
+</script>
