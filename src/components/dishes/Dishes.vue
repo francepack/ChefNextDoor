@@ -49,6 +49,13 @@
                   <label class="label">Name</label>
                   <input class="input" v-model="dish.name" />
                 </div>
+                <div class="mb-6">
+                  <select id="vendor_update" class="select" v-model="dish.vendor">
+                    <option disabled value="">Select a vendor</option>
+                    <option :value="vendor.id" v-for="vendor in vendors" :key="vendor.id">{{ vendor.name }}></option>
+                  </select>
+                </div>
+                <input type="submit" value="Update" class="my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue-400 border border-blue-400 no-underline font-bold py-2 px-4 rounded cursor-pointer" />
               </div>
             </form>
           </div>
@@ -56,3 +63,7 @@
     </ul>
   </div>
 </template>
+
+<script>
+
+</script>
