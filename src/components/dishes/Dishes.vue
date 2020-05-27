@@ -25,5 +25,17 @@
       </div>
       <input type="submit" value="Add Dish" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green-500 hover:bg-green-600 block w-full py-4 text-white items-center justify-center" />
     </form>
+
+    <hr class="border border-gray-400 my-6" />
+
+    <ul class="list-reset mt-4">
+      <li class="py-4" v-for="dish in dishes" :key="dish.id" :dish="dish">
+        <div class="flex items-center justify-between flex-wrap">
+          <p class="block flex font-mono font-semibold flex items-center">
+            {{ dish.name }} &mdash;
+          </p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
