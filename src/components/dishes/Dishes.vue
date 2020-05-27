@@ -34,7 +34,24 @@
           <p class="block flex font-mono font-semibold flex items-center">
             {{ dish.name }} &mdash;
           </p>
+          <p class="block font-mono font-semibold">{{ getVendor(dish) }}</p>
         </div>
+          <button class="bg-transparent text-sm hover:bg-blue-600 hover:text-white text-blue-500 border border-blue-400 no-underline font-bold py-2 px-4 mr-2 rounded" @click.prevent="editDish(dish)">
+            Edit
+          </button>
+          <button class="bg-transparent text-sm hover:bg-blue-600 hover:text-white text-blue-500 border border-blue-400 no-underline font-bold py-2 px-4 mr-2 rounded" @click.prevent="removeDish(dish)">
+            Delete
+          </button>
+          <div v-if="dish == editedDish">
+            <form action="" @submit.prevent="updatedDish(dish)">
+              <div class="mb-6 p-4 bg-white rounded border border-gray-400 mt-4">
+                <div class="mb-6">
+                  <label class="label">Name</label>
+                  <input class="input" v-model="dish.name" />
+                </div>
+              </div>
+            </form>
+          </div>
       </li>
     </ul>
   </div>
