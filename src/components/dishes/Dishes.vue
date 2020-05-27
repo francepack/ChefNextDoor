@@ -65,5 +65,29 @@
 </template>
 
 <script>
+export default {
+  name: 'Dishes',
+  data () {
+    return {
+      vendors: [],
+      dishes: [],
+      newDish: [],
+      error: '',
+      editDish: ''
+    }
+  },
+  created () {
+    if (!localStorage.signedIn) {
+      this.$router.replace('/')
+    } else {
+      this.$http.secured.get('/api/v1/dishes')
+        .then(response => { this.dishes = response.data })
+        .catch(error => this.setError(error, 'Something went wrong'))
+      }
+    },
+    methods () {
 
+    }
+  }
+}
 </script>
