@@ -80,6 +80,14 @@ export default {
         })
         .catch(error => this.setError(error, 'Cannot create artist'))
     },
-  }
+    removeVendor (vendor) {
+      this.$http.secured.delete(`api/v1/vendors/{vendor.id}`)
+        .then(response => {
+          this.vendors.splice(this.vendors.indexOf(vendor), 1)
+        })
+        .catch(error => this.setError(error, 'Cannot delete vendor'))
+    },
+    
+  } 
 }
 </script>
