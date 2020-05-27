@@ -56,7 +56,16 @@ export default {
     }
   }, 
   created () {
-
+    if (!localStorage.signedIn) {
+      this.$router.replace('/')
+    } else {
+      this.$http.secured.get('/api/v1/vendors')
+        .then(response => { this.vendors = response.data })
+        .catch(error => this.setError(error, 'Something went wrong'))
+    }
+  },
+  methods: {
+    
   }
 }
 </script>
