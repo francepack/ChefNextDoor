@@ -4,7 +4,7 @@
     <h3 class="font-mono font-regular text-3xl mb-4">Make a vendor profile!</h3>
     <form @submit.prevent="addVendor">
       <div class="mb-6">
-        <input type="text" 
+        <input type="text"
           class="input"
           autofocus
           autocomplete="off"
@@ -54,7 +54,7 @@ export default {
       error: '',
       editArtist: ''
     }
-  }, 
+  },
   created () {
     if (!localStorage.signedIn) {
       this.$router.replace('/')
@@ -73,7 +73,7 @@ export default {
       if (!val) {
         return
       }
-      this.$http.secured.post('api/v1/vendors', { vendor: { name: this.newVendor.name }})
+      this.$http.secured.post('api/v1/vendors', {vendor: {name: this.newVendor.name}})
         .then(response => {
           this.vendors.push(response.data)
           this.newVendor = ''
@@ -92,9 +92,9 @@ export default {
     },
     updateVendor (vendor) {
       this.editedVendor = ''
-      this.$http.secured.patch(`api/v1/vendors/${vendor.id}`, { vendor: { name: vendor.name }})
-      .catch(error => this.setError(error, 'Cannot update vendor'))
+      this.$http.secured.patch(`api/v1/vendors/${vendor.id}`, {vendor: {name: vendor.name}})
+        .catch(error => this.setError(error, 'Cannot update vendor'))
     }
-  } 
+  }
 }
 </script>

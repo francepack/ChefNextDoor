@@ -70,7 +70,7 @@ export default {
       dishes: [],
       newDish: [],
       error: '',
-      editDish: ''
+      editedDish: ''
     }
   },
   created () {
@@ -93,19 +93,19 @@ export default {
       const dishVendor = this.vendors.filter(vendor => vendor.id === dish.vendor_id)
       let vendor
       dishVendor.forEach(ven => {
-        vendor = ven.name 
+        vendor = ven.name
       })
       return vendor
     },
     addDish () {
-      const val = this.newRecord
+      const value = this.newDish
       if (!value) {
-        return
+        return 'No New Dish!'
       } else {
-        this.$http.post('api/v1/dishes/', { dish : { name: this.newDish.name }})
+        this.$http.post('api/v1/dishes/', {dish: {name: this.newDish.name}})
           .then(response => {
             this.dishes.push(response.data)
-            this.newRecord = ''
+            this.newDish = ''
           })
           .catch(error => this.setError(error, 'Cannot create dish'))
       }
@@ -122,8 +122,8 @@ export default {
     },
     updateDish (dish) {
       this.editDish = ''
-      this.$http.secured.patch(`/api/v1/records/${record.id}`, { dish: { name: dish.name }})
-      .catch(error => this.setError(error, 'Cannot update dish'))
+      this.$http.secured.patch(`/api/v1/dishes/${dish.id}`, {dish: {name: dish.name}})
+        .catch(error => this.setError(error, 'Cannot update dish'))
     }
   }
 }
