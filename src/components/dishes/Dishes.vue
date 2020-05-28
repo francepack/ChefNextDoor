@@ -83,40 +83,47 @@ export default {
       this.$http.secured.get('/api/v1/vendors')
         .then(response => { this.vendors = response.data })
         .catch(error => this.setError(error, 'Something went wrong'))
+    }
+  },
+  methods: {
+    setError (error, text) {
+      this.error = (error.response && error.response.data && error.response.data.error) || text
+    },
+    getVendor (dish) {
+      const dishVendor = this.vendors.filter(vendor => vendor.id === dish.vendor_id)
+      let vendor
+      dishVendor.forEach(ven => {
+        vendor = ven.name 
+      })
+      return vendor
+    },
+    addDish () {
+      const val = this.newRecord
+      if (!value) {
+        return
+      } else {
+        this.$http.post('api/v1/dishes/', { dish : { name: this.newDish.name }})
+          .then(response => {
+            this.dishes.push(response.data)
+            this.newRecord = ''
+          })
+          .catch(error => this.setError(error, 'Cannot create dish'))
       }
     },
-    methods () {
-      setError (error, text) {
-        this.error = (error.response && error.response.data && error.response.data.error) || text
-      },
-      getVendor (dish) {
-        const dishVendor = this.vendors.filter(vendor => vendor.id === dish.vendor_id)
-        let vendor
-        dishVendor.forEach(ven => {
-          vendor = ven.name 
+    removeDish (dish) {
+      this.$http.secured.delete(`api/v1/dishes/${dish.id}`)
+        .then(response => {
+          this.dishes.splice(this.dishes.indexOf(dish), 1)
         })
-        return vendor
-      },
-      addDish () {
-        const val = this.newRecord
-        if (!value) {
-          return
-        } else {
-          this.$http.post('api/v1/dishes/', { dish : { name: this.newDish.name }})
-            .then(response => {
-              this.dishes.push(response.data)
-              this.newRecord = ''
-            })
-            .catch(error => this.setError(error, 'Cannot create dish'))
-        }
-      },
-      removeDish (dish) {
-        this.$http.secured.delete(`api/v1/dishes/${dish.id}`)
-          .then(response => {
-            this.dishes.splice(this.dishes.indexOf(dish), 1)
-          })
-          .catch(error => this.setError(error, 'Cannot delete error'))
-      },
+        .catch(error => this.setError(error, 'Cannot delete dish'))
+    },
+    editDish (dish) {
+      this.editedDish = dish
+    },
+    updateDish (dish) {
+      this.editDish = ''
+      this.$http.secured.patch(`/api/v1/records/${record.id}`, { dish: { name: dish.name }})
+      .catch(error => this.setError(error, 'Cannot update dish'))
     }
   }
 }
