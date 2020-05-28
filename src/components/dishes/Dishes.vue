@@ -90,8 +90,16 @@ export default {
     },
     methods () {
       setError (error, text) {
-        
-      }
+        this.error = (error.response && error.response.data && error.response.data.error) || text
+      },
+      getVendor (dish) {
+        const dishVendor = this.vendors.filter(vendor => vendor.id === dish.vendor_id)
+        let vendor
+        dishVendor.forEach(ven => {
+          vendor = ven.name 
+        })
+        return vendor
+      },
     }
   }
 }
