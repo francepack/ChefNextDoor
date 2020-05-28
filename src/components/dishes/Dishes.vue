@@ -2,7 +2,6 @@
   <div class="max-w-md m-auto py-10">
     <div class="text-red-600" v-if="error">{{ error }}</div>
     <h3 class="font-mono font-regular text-3xl mb-4">Add a new Dish</h3>
-
     <form @submit.prevent="addDish">
       <div class="mb-6">
         <label for="dish_name" class="label">Name</label>
@@ -25,9 +24,7 @@
       </div>
       <input type="submit" value="Add Dish" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green-500 hover:bg-green-600 block w-full py-4 text-white items-center justify-center" />
     </form>
-
     <hr class="border border-gray-400 my-6" />
-
     <ul class="list-reset mt-4">
       <li class="py-4" v-for="dish in dishes" :key="dish.id" :dish="dish">
         <div class="flex items-center justify-between flex-wrap">
@@ -99,6 +96,26 @@ export default {
           vendor = ven.name 
         })
         return vendor
+      },
+      addDish () {
+        const val = this.newRecord
+        if (!value) {
+          return
+        } else {
+          this.$http.post('api/v1/dishes/', { dish : { name: this.newDish.name }})
+            .then(response => {
+              this.dishes.push(response.data)
+              this.newRecord = ''
+            })
+            .catch(error => this.setError(error, 'Cannot create dish'))
+        }
+      },
+      removeDish (dish) {
+        this.$http.secured.delete(`api/v1/dishes/${dish.id}`)
+          .then(response => {
+            this.dishes.splice(this.dishes.indexOf(dish), 1)
+          })
+          .catch(error => this.setError(error, 'Cannot delete error'))
       },
     }
   }
