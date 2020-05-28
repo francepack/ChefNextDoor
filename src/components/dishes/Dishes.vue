@@ -83,10 +83,15 @@ export default {
       this.$http.secured.get('/api/v1/dishes')
         .then(response => { this.dishes = response.data })
         .catch(error => this.setError(error, 'Something went wrong'))
+      this.$http.secured.get('/api/v1/vendors')
+        .then(response => { this.vendors = response.data })
+        .catch(error => this.setError(error, 'Something went wrong'))
       }
     },
     methods () {
-
+      setError (error, text) {
+        
+      }
     }
   }
 }
