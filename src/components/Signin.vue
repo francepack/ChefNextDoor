@@ -62,7 +62,7 @@ export default {
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/records')
+        this.$router.replace('/dishes')
       }
     }
   }

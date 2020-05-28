@@ -45,29 +45,29 @@ export default {
     this.checkSignedIn()
   },
   methods: {
-    signin () {
+    signup () {
       this.$http.plain.post('/signup', {email: this.email, password: this.password, password_confirmation: this.password_confirmation})
-        .then(response => this.signinSuccessful(response))
-        .catch(error => this.signinFailed(error))
+        .then(response => this.signupSuccessful(response))
+        .catch(error => this.signupFailed(error))
     },
-    signinSuccessful (response) {
+    signupSuccessful (response) {
       if (!response.data.csrf) {
-        this.signinFailed(response)
+        this.signupFailed(response)
         return
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      this.$router.replace('/')
+      this.$router.replace('/dishes')
     },
-    signinFailed (error) {
+    signupFailed (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || 'Something went wrong'
       delete localStorage.csrf
       delete localStorage.signedIn
     },
     checkSignedIn () {
       if (localStorage.signedIn) {
-        this.$router.replace('/records')
+        this.$router.replace('/dishes')
       }
     }
   }
